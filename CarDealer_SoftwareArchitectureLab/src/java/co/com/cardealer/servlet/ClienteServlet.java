@@ -44,34 +44,36 @@ public class ClienteServlet extends HttpServlet {
             String action = request.getParameter("action");
             String url = "index.jsp";
             
-            if ("list".equals(action)) {
-                
-                List<Cliente> clientes = clienteFacade.findAll();
-                request.getSession().setAttribute("clientes", clientes);
-                url = "listaClientes.jsp";
-            } else if ("insert".equals(action)) {
-                
-                Cliente cliente = new Cliente();
-                cliente.setNombre(request.getParameter("nombre"));
-                cliente.setApellido(request.getParameter("apellido"));
-                cliente.setTelefono(request.getParameter("telefono"));
-                cliente.setEmail(request.getParameter("email"));
-                cliente.setDireccion(request.getParameter("direccion"));
-                
-                clienteFacade.create(cliente);
-                url = "listaClientes.jsp";
-            } else if ("update".equals(action)) {
-                
-                Cliente cliente = new Cliente();
-                cliente.setNombre(request.getParameter("nombre"));
-                cliente.setApellido(request.getParameter("apellido"));
-                cliente.setTelefono(request.getParameter("telefono"));
-                cliente.setEmail(request.getParameter("email"));
-                cliente.setDireccion(request.getParameter("direccion"));
-                
-                clienteFacade.edit(cliente);
-                url = "listaClientes.jsp";
-                
+            if (null != action) switch (action) {
+                case "list":
+                    List<Cliente> clientes = clienteFacade.findAll();
+                    request.getSession().setAttribute("clientes", clientes);
+                    url = "listaClientes.jsp";
+                    break;
+                case "insert":{
+                    Cliente cliente = new Cliente();
+                    cliente.setNombre(request.getParameter("nombre"));
+                    cliente.setApellido(request.getParameter("apellido"));
+                    cliente.setTelefono(request.getParameter("telefono"));
+                    cliente.setEmail(request.getParameter("email"));
+                    cliente.setDireccion(request.getParameter("direccion"));
+                    clienteFacade.create(cliente);
+                    url = "listaClientes.jsp";
+                    break;
+                    }
+                case "update":{
+                    Cliente cliente = new Cliente();
+                    cliente.setNombre(request.getParameter("nombre"));
+                    cliente.setApellido(request.getParameter("apellido"));
+                    cliente.setTelefono(request.getParameter("telefono"));
+                    cliente.setEmail(request.getParameter("email"));
+                    cliente.setDireccion(request.getParameter("direccion"));
+                    clienteFacade.edit(cliente);
+                    url = "listaClientes.jsp";
+                    break;
+                    }
+                default:
+                    break;
             }
             
             response.sendRedirect(url);
