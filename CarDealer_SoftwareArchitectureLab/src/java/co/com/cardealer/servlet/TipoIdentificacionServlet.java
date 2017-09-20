@@ -5,8 +5,12 @@
  */
 package co.com.cardealer.servlet;
 
+import co.com.cardealer.ejb.TipoIdentificacionFacadeLocal;
+import co.com.cardealer.entity.TipoIdentificacion;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +21,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author DAVID
  */
 public class TipoIdentificacionServlet extends HttpServlet {
+
+    @EJB
+    private TipoIdentificacionFacadeLocal tipoIdentificacionFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,17 +37,32 @@ public class TipoIdentificacionServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet TipoIdentificacionServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet TipoIdentificacionServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        try {
+            
+            String action = request.getParameter("action");
+            String url = "index.jsp";
+            
+            if (null != action) switch (action) {
+                case "list":
+                    
+                    List<TipoIdentificacion> tiposIdentificacion = tipoIdentificacionFacade.findAll();
+                    request.getSession().setAttribute("tiposIdentificacion", tiposIdentificacion);
+                    url = "listaTiposIdentificacion.jsp";
+                    break;
+                case "search":{
+                    
+                    TipoIdentificacion tipoIdentificacion = tipoIdentificacionFacade.find(request.getParameter("codigo"));
+                    request.getSession().setAttribute("tipoIdentificacion", tipoIdentificacion);
+                    url = "tipoIdentificacion.jsp";
+                    break;
+                }
+                default:
+                    break;
+            }
+        } finally {
+            
+            out.close();
         }
     }
 
