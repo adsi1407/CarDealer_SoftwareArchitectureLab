@@ -12,6 +12,10 @@
         <servlet-name>VehiculoServlet</servlet-name>
         <servlet-class>co.com.cardealer.servlet.VehiculoServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FotoServlet</servlet-name>
+        <servlet-class>co.com.cardealer.servlet.FotoServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ClienteServlet</servlet-name>
         <url-pattern>/ClienteServlet</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>VehiculoServlet</servlet-name>
         <url-pattern>/VehiculoServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FotoServlet</servlet-name>
+        <url-pattern>/FotoServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
