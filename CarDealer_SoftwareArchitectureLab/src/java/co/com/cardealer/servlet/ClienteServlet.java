@@ -7,6 +7,7 @@ package co.com.cardealer.servlet;
 
 import co.com.cardealer.ejb.ClienteFacadeLocal;
 import co.com.cardealer.entity.Cliente;
+import co.com.cardealer.entity.ClientePK;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -72,6 +73,16 @@ public class ClienteServlet extends HttpServlet {
                     url = "listaClientes.jsp";
                     break;
                     }
+                case "search":{
+                    
+                    ClientePK clientePk = new ClientePK();
+                    clientePk.setTipoIdentificacion(Integer.parseInt(request.getParameter("tipoIdentificacion")));
+                    clientePk.setNumeroIdentificacion(request.getParameter("numeroIdentificacion"));
+                    Cliente cliente = clienteFacade.find(clientePk);
+                    request.getSession().setAttribute("cliente", cliente);
+                    url = "listaClientes.jsp";
+                    break;
+                }
                 default:
                     break;
             }
