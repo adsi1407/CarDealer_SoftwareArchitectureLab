@@ -6,16 +6,20 @@
 package co.com.cardealer.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -38,6 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Vehiculo.findByTipoCarroceria", query = "SELECT v FROM Vehiculo v WHERE v.tipoCarroceria = :tipoCarroceria")
     , @NamedQuery(name = "Vehiculo.findByTipoCombustible", query = "SELECT v FROM Vehiculo v WHERE v.tipoCombustible = :tipoCombustible")})
 public class Vehiculo implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vehiculo")
+    private List<Venta> ventaList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -227,6 +234,15 @@ public class Vehiculo implements Serializable {
     @Override
     public String toString() {
         return "co.com.cardealer.entity.Vehiculo[ matricula=" + matricula + " ]";
+    }
+
+    @XmlTransient
+    public List<Venta> getVentaList() {
+        return ventaList;
+    }
+
+    public void setVentaList(List<Venta> ventaList) {
+        this.ventaList = ventaList;
     }
     
 }

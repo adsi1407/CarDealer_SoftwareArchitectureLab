@@ -6,16 +6,22 @@
 package co.com.cardealer.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -34,6 +40,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Clientes.findByDireccion", query = "SELECT c FROM Clientes c WHERE c.direccion = :direccion")
     , @NamedQuery(name = "Clientes.findByEmail", query = "SELECT c FROM Clientes c WHERE c.email = :email")})
 public class Cliente implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
+    private List<Venta> ventaList;
+    @JoinColumn(name = "tipoIdentificacion", referencedColumnName = "codigo", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private TipoIdentificacion tipoIdentificacion1;
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -156,6 +168,23 @@ public class Cliente implements Serializable {
     @Override
     public String toString() {
         return "co.com.cardealer.entity.Clientes[ clientesPK=" + clientesPK + " ]";
+    }
+
+    @XmlTransient
+    public List<Venta> getVentaList() {
+        return ventaList;
+    }
+
+    public void setVentaList(List<Venta> ventaList) {
+        this.ventaList = ventaList;
+    }
+
+    public TipoIdentificacion getTipoIdentificacion1() {
+        return tipoIdentificacion1;
+    }
+
+    public void setTipoIdentificacion1(TipoIdentificacion tipoIdentificacion1) {
+        this.tipoIdentificacion1 = tipoIdentificacion1;
     }
     
 }
