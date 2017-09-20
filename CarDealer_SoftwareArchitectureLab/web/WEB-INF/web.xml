@@ -4,9 +4,25 @@
         <servlet-name>ClienteServlet</servlet-name>
         <servlet-class>co.com.cardealer.servlet.ClienteServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TipoIdentificacionServlet</servlet-name>
+        <servlet-class>co.com.cardealer.servlet.TipoIdentificacionServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VehiculoServlet</servlet-name>
+        <servlet-class>co.com.cardealer.servlet.VehiculoServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ClienteServlet</servlet-name>
         <url-pattern>/ClienteServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TipoIdentificacionServlet</servlet-name>
+        <url-pattern>/TipoIdentificacionServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VehiculoServlet</servlet-name>
+        <url-pattern>/VehiculoServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
