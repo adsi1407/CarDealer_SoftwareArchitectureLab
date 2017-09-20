@@ -60,6 +60,17 @@ public class ClienteServlet extends HttpServlet {
                 
                 clienteFacade.create(cliente);
                 url = "listaClientes.jsp";
+            } else if ("update".equals(action)) {
+                
+                Cliente cliente = new Cliente();
+                cliente.setNombre(request.getParameter("nombre"));
+                cliente.setApellido(request.getParameter("apellido"));
+                cliente.setTelefono(request.getParameter("telefono"));
+                cliente.setEmail(request.getParameter("email"));
+                cliente.setDireccion(request.getParameter("direccion"));
+                
+                clienteFacade.edit(cliente);
+                url = "listaClientes.jsp";
             }
         } finally {
             out.close();
