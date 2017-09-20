@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
  * @author DAVID
  */
 @Embeddable
-public class ClientesPK implements Serializable {
+public class ClientePK implements Serializable {
 
     @Basic(optional = false)
     @NotNull
@@ -29,10 +29,10 @@ public class ClientesPK implements Serializable {
     @Column(name = "numeroIdentificacion")
     private String numeroIdentificacion;
 
-    public ClientesPK() {
+    public ClientePK() {
     }
 
-    public ClientesPK(int tipoIdentificacion, String numeroIdentificacion) {
+    public ClientePK(int tipoIdentificacion, String numeroIdentificacion) {
         this.tipoIdentificacion = tipoIdentificacion;
         this.numeroIdentificacion = numeroIdentificacion;
     }
@@ -64,10 +64,10 @@ public class ClientesPK implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ClientesPK)) {
+        if (!(object instanceof ClientePK)) {
             return false;
         }
-        ClientesPK other = (ClientesPK) object;
+        ClientePK other = (ClientePK) object;
         if (this.tipoIdentificacion != other.tipoIdentificacion) {
             return false;
         }

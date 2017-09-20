@@ -33,11 +33,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Clientes.findByTelefono", query = "SELECT c FROM Clientes c WHERE c.telefono = :telefono")
     , @NamedQuery(name = "Clientes.findByDireccion", query = "SELECT c FROM Clientes c WHERE c.direccion = :direccion")
     , @NamedQuery(name = "Clientes.findByEmail", query = "SELECT c FROM Clientes c WHERE c.email = :email")})
-public class Clientes implements Serializable {
+public class Cliente implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected ClientesPK clientesPK;
+    protected ClientePK clientesPK;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -65,14 +65,14 @@ public class Clientes implements Serializable {
     @Column(name = "email")
     private String email;
 
-    public Clientes() {
+    public Cliente() {
     }
 
-    public Clientes(ClientesPK clientesPK) {
+    public Cliente(ClientePK clientesPK) {
         this.clientesPK = clientesPK;
     }
 
-    public Clientes(ClientesPK clientesPK, String nombre, String apellido, String telefono, String direccion, String email) {
+    public Cliente(ClientePK clientesPK, String nombre, String apellido, String telefono, String direccion, String email) {
         this.clientesPK = clientesPK;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -81,15 +81,15 @@ public class Clientes implements Serializable {
         this.email = email;
     }
 
-    public Clientes(int tipoIdentificacion, String numeroIdentificacion) {
-        this.clientesPK = new ClientesPK(tipoIdentificacion, numeroIdentificacion);
+    public Cliente(int tipoIdentificacion, String numeroIdentificacion) {
+        this.clientesPK = new ClientePK(tipoIdentificacion, numeroIdentificacion);
     }
 
-    public ClientesPK getClientesPK() {
+    public ClientePK getClientesPK() {
         return clientesPK;
     }
 
-    public void setClientesPK(ClientesPK clientesPK) {
+    public void setClientesPK(ClientePK clientesPK) {
         this.clientesPK = clientesPK;
     }
 
@@ -143,10 +143,10 @@ public class Clientes implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Clientes)) {
+        if (!(object instanceof Cliente)) {
             return false;
         }
-        Clientes other = (Clientes) object;
+        Cliente other = (Cliente) object;
         if ((this.clientesPK == null && other.clientesPK != null) || (this.clientesPK != null && !this.clientesPK.equals(other.clientesPK))) {
             return false;
         }
