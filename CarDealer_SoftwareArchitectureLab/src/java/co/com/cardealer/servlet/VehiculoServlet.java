@@ -5,8 +5,12 @@
  */
 package co.com.cardealer.servlet;
 
+import co.com.cardealer.ejb.VehiculoFacadeLocal;
+import co.com.cardealer.entity.Vehiculo;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +21,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author DAVID
  */
 public class VehiculoServlet extends HttpServlet {
+
+    @EJB
+    private VehiculoFacadeLocal vehiculoFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,18 +36,68 @@ public class VehiculoServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet VehiculoServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet VehiculoServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        try {
+            
+            String action = request.getParameter("action");
+            String url = "index.jsp";
+            
+            if (null != action) switch (action) {
+                case "list":
+                    
+                    List<Vehiculo> vehiculos = vehiculoFacade.findAll();
+                    request.getSession().setAttribute("vehiculos", vehiculos);
+                    url = "listaVehiculos.jsp";
+                    break;
+                case "insert":{
+                    
+                    Vehiculo vehiculo = new Vehiculo();
+                    vehiculo.setMatricula(request.getParameter("matricula"));
+                    vehiculo.setPlaca(request.getParameter("placa"));
+                    vehiculo.setMarca(request.getParameter("marca"));
+                    vehiculo.setLinea(request.getParameter("linea"));
+                    vehiculo.setModelo(Integer.parseInt(request.getParameter("modelo")));
+                    vehiculo.setCilindraje(Double.parseDouble(request.getParameter("cilindraje")));
+                    vehiculo.setClaseVehiculo(request.getParameter("claseVehiculo"));
+                    vehiculo.setTipoCarroceria(request.getParameter("tipoCarroceria"));
+                    vehiculo.setTipoCombustible(request.getParameter("tipoCombustible"));
+                    vehiculoFacade.create(vehiculo);
+                    url = "listaVehiculos.jsp";
+                    break;
+                    }
+                case "update":{
+                    
+                    Vehiculo vehiculo = new Vehiculo();
+                    vehiculo.setMatricula(request.getParameter("matricula"));
+                    vehiculo.setPlaca(request.getParameter("placa"));
+                    vehiculo.setMarca(request.getParameter("marca"));
+                    vehiculo.setLinea(request.getParameter("linea"));
+                    vehiculo.setModelo(Integer.parseInt(request.getParameter("modelo")));
+                    vehiculo.setCilindraje(Double.parseDouble(request.getParameter("cilindraje")));
+                    vehiculo.setClaseVehiculo(request.getParameter("claseVehiculo"));
+                    vehiculo.setTipoCarroceria(request.getParameter("tipoCarroceria"));
+                    vehiculo.setTipoCombustible(request.getParameter("tipoCombustible"));
+                    vehiculoFacade.edit(vehiculo);
+                    url = "listaVehiculos.jsp";
+                    break;
+                    }
+                case "search":{
+                    
+                    Vehiculo vehiculo = vehiculoFacade.find(request.getParameter("matricula"));
+                    request.getSession().setAttribute("vehiculo", vehiculo);
+                    url = "detalleVehiculo.jsp";
+                    break;
+                }
+                default:
+                    break;
+            }
+            
+            response.sendRedirect(url);
+        } finally {
+            
+            out.close();
         }
     }
 
