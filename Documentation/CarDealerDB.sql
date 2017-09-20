@@ -36,9 +36,33 @@ url VARCHAR(255) NOT NULL,
 fecha DATETIME NOT NULL
 );
 
+CREATE TABLE Ventas(
+codigo VARCHAR(50) PRIMARY KEY,
+fecha DATETIME NOT NULL,
+tipoIdentificacionCliente INT NOT NULL,
+numeroIdentificacionCliente VARCHAR(50) NOT NULL,
+vehiculo VARCHAR(100) NOT NULL,
+valorBruto DECIMAL NOT NULL,
+porcentajeIva DOUBLE NOT NULL
+);
+
 ALTER TABLE Clientes 
 ADD CONSTRAINT Clientes_tipoIdentificacion 
 FOREIGN KEY (tipoIdentificacion) 
 REFERENCES tipoIdentificacion (codigo) 
+ON DELETE NO ACTION 
+ON UPDATE CASCADE;
+
+ALTER TABLE Ventas 
+ADD CONSTRAINT Ventas_Clientes
+FOREIGN KEY (tipoIdentificacionCliente, numeroIdentificacionCliente) 
+REFERENCES Clientes (tipoIdentificacion, numeroIdentificacion) 
+ON DELETE NO ACTION 
+ON UPDATE CASCADE;
+
+ALTER TABLE Ventas 
+ADD CONSTRAINT Ventas_Vehiculos
+FOREIGN KEY (vehiculo) 
+REFERENCES Vehiculos (matricula) 
 ON DELETE NO ACTION 
 ON UPDATE CASCADE;
