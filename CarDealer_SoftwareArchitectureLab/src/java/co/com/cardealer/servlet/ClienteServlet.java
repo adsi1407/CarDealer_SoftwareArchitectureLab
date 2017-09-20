@@ -71,8 +71,12 @@ public class ClienteServlet extends HttpServlet {
                 
                 clienteFacade.edit(cliente);
                 url = "listaClientes.jsp";
+                
             }
+            
+            response.sendRedirect(url);
         } finally {
+            
             out.close();
         }
     }
