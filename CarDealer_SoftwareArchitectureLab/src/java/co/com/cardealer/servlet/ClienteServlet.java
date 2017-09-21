@@ -80,7 +80,7 @@ public class ClienteServlet extends HttpServlet {
                     clientePk.setNumeroIdentificacion(request.getParameter("numeroIdentificacion"));
                     Cliente cliente = clienteFacade.find(clientePk);
                     request.getSession().setAttribute("cliente", cliente);
-                    url = "listaClientes.jsp";
+                    url = "detalleCliente.jsp";
                     break;
                 }
                 default:
