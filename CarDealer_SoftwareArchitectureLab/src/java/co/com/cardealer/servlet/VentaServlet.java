@@ -29,18 +29,26 @@ public class VentaServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet VentaServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet VentaServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        try {
+            
+            String action = request.getParameter("action");
+            String url = "index.jsp";
+            
+            if (null != action) switch (action) {
+                case "insert":
+                    
+                    break;
+                default:
+                    break;
+            }
+            
+            response.sendRedirect(url);
+        } finally {
+            
+            out.close();
         }
     }
 
