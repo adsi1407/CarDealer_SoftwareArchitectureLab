@@ -5,7 +5,7 @@
  */
 package co.com.cardealer.ejb;
 
-import co.com.cardealer.entity.TipoIdentificacion;
+import co.com.cardealer.entity.Tipoidentificacion;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,19 +14,19 @@ import javax.ejb.Local;
  * @author DAVID
  */
 @Local
-public interface TipoIdentificacionFacadeLocal {
+public interface TipoidentificacionFacadeLocal {
 
-    void create(TipoIdentificacion tipoIdentificacion);
+    void create(Tipoidentificacion tipoidentificacion);
 
-    void edit(TipoIdentificacion tipoIdentificacion);
+    void edit(Tipoidentificacion tipoidentificacion);
 
-    void remove(TipoIdentificacion tipoIdentificacion);
+    void remove(Tipoidentificacion tipoidentificacion);
 
-    TipoIdentificacion find(Object id);
+    Tipoidentificacion find(Object id);
 
-    List<TipoIdentificacion> findAll();
+    List<Tipoidentificacion> findAll();
 
-    List<TipoIdentificacion> findRange(int[] range);
+    List<Tipoidentificacion> findRange(int[] range);
 
     int count();
     

@@ -5,7 +5,7 @@
  */
 package co.com.cardealer.ejb;
 
-import co.com.cardealer.entity.TipoIdentificacion;
+import co.com.cardealer.entity.Tipoidentificacion;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author DAVID
  */
 @Stateless
-public class TipoIdentificacionFacade extends AbstractFacade<TipoIdentificacion> implements TipoIdentificacionFacadeLocal {
+public class TipoidentificacionFacade extends AbstractFacade<Tipoidentificacion> implements TipoidentificacionFacadeLocal {
 
     @PersistenceContext(unitName = "CarDealer_SoftwareArchitectureLabPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class TipoIdentificacionFacade extends AbstractFacade<TipoIdentificacion>
         return em;
     }
 
-    public TipoIdentificacionFacade() {
-        super(TipoIdentificacion.class);
+    public TipoidentificacionFacade() {
+        super(Tipoidentificacion.class);
     }
     
 }
