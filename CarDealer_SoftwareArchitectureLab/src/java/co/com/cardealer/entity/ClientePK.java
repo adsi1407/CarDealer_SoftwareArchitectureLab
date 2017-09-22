@@ -79,7 +79,7 @@ public class ClientePK implements Serializable {
 
     @Override
     public String toString() {
-        return "co.com.cardealer.entity.ClientesPK[ tipoIdentificacion=" + tipoIdentificacion + ", numeroIdentificacion=" + numeroIdentificacion + " ]";
+        return "co.com.cardealer.entity.ClientePK[ tipoIdentificacion=" + tipoIdentificacion + ", numeroIdentificacion=" + numeroIdentificacion + " ]";
     }
     
 }

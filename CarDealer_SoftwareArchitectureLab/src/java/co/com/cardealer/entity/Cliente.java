@@ -31,25 +31,19 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "clientes")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Clientes.findAll", query = "SELECT c FROM Clientes c")
-    , @NamedQuery(name = "Clientes.findByTipoIdentificacion", query = "SELECT c FROM Clientes c WHERE c.clientesPK.tipoIdentificacion = :tipoIdentificacion")
-    , @NamedQuery(name = "Clientes.findByNumeroIdentificacion", query = "SELECT c FROM Clientes c WHERE c.clientesPK.numeroIdentificacion = :numeroIdentificacion")
-    , @NamedQuery(name = "Clientes.findByNombre", query = "SELECT c FROM Clientes c WHERE c.nombre = :nombre")
-    , @NamedQuery(name = "Clientes.findByApellido", query = "SELECT c FROM Clientes c WHERE c.apellido = :apellido")
-    , @NamedQuery(name = "Clientes.findByTelefono", query = "SELECT c FROM Clientes c WHERE c.telefono = :telefono")
-    , @NamedQuery(name = "Clientes.findByDireccion", query = "SELECT c FROM Clientes c WHERE c.direccion = :direccion")
-    , @NamedQuery(name = "Clientes.findByEmail", query = "SELECT c FROM Clientes c WHERE c.email = :email")})
+    @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c")
+    , @NamedQuery(name = "Cliente.findByTipoIdentificacion", query = "SELECT c FROM Cliente c WHERE c.clientePK.tipoIdentificacion = :tipoIdentificacion")
+    , @NamedQuery(name = "Cliente.findByNumeroIdentificacion", query = "SELECT c FROM Cliente c WHERE c.clientePK.numeroIdentificacion = :numeroIdentificacion")
+    , @NamedQuery(name = "Cliente.findByNombre", query = "SELECT c FROM Cliente c WHERE c.nombre = :nombre")
+    , @NamedQuery(name = "Cliente.findByApellido", query = "SELECT c FROM Cliente c WHERE c.apellido = :apellido")
+    , @NamedQuery(name = "Cliente.findByTelefono", query = "SELECT c FROM Cliente c WHERE c.telefono = :telefono")
+    , @NamedQuery(name = "Cliente.findByDireccion", query = "SELECT c FROM Cliente c WHERE c.direccion = :direccion")
+    , @NamedQuery(name = "Cliente.findByEmail", query = "SELECT c FROM Cliente c WHERE c.email = :email")})
 public class Cliente implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
-    private List<Venta> ventaList;
-    @JoinColumn(name = "tipoIdentificacion", referencedColumnName = "codigo", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private TipoIdentificacion tipoIdentificacion1;
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected ClientePK clientesPK;
+    protected ClientePK clientePK;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -76,16 +70,21 @@ public class Cliente implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "email")
     private String email;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
+    private List<Venta> ventaList;
+    @JoinColumn(name = "tipoIdentificacion", referencedColumnName = "codigo", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Tipoidentificacion tipoidentificacion;
 
     public Cliente() {
     }
 
-    public Cliente(ClientePK clientesPK) {
-        this.clientesPK = clientesPK;
+    public Cliente(ClientePK clientePK) {
+        this.clientePK = clientePK;
     }
 
-    public Cliente(ClientePK clientesPK, String nombre, String apellido, String telefono, String direccion, String email) {
-        this.clientesPK = clientesPK;
+    public Cliente(ClientePK clientePK, String nombre, String apellido, String telefono, String direccion, String email) {
+        this.clientePK = clientePK;
         this.nombre = nombre;
         this.apellido = apellido;
         this.telefono = telefono;
@@ -94,15 +93,15 @@ public class Cliente implements Serializable {
     }
 
     public Cliente(int tipoIdentificacion, String numeroIdentificacion) {
-        this.clientesPK = new ClientePK(tipoIdentificacion, numeroIdentificacion);
+        this.clientePK = new ClientePK(tipoIdentificacion, numeroIdentificacion);
     }
 
-    public ClientePK getClientesPK() {
-        return clientesPK;
+    public ClientePK getClientePK() {
+        return clientePK;
     }
 
-    public void setClientesPK(ClientePK clientesPK) {
-        this.clientesPK = clientesPK;
+    public void setClientePK(ClientePK clientePK) {
+        this.clientePK = clientePK;
     }
 
     public String getNombre() {
@@ -145,10 +144,27 @@ public class Cliente implements Serializable {
         this.email = email;
     }
 
+    @XmlTransient
+    public List<Venta> getVentaList() {
+        return ventaList;
+    }
+
+    public void setVentaList(List<Venta> ventaList) {
+        this.ventaList = ventaList;
+    }
+
+    public Tipoidentificacion getTipoidentificacion() {
+        return tipoidentificacion;
+    }
+
+    public void setTipoidentificacion(Tipoidentificacion tipoidentificacion) {
+        this.tipoidentificacion = tipoidentificacion;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (clientesPK != null ? clientesPK.hashCode() : 0);
+        hash += (clientePK != null ? clientePK.hashCode() : 0);
         return hash;
     }
 
@@ -159,7 +175,7 @@ public class Cliente implements Serializable {
             return false;
         }
         Cliente other = (Cliente) object;
-        if ((this.clientesPK == null && other.clientesPK != null) || (this.clientesPK != null && !this.clientesPK.equals(other.clientesPK))) {
+        if ((this.clientePK == null && other.clientePK != null) || (this.clientePK != null && !this.clientePK.equals(other.clientePK))) {
             return false;
         }
         return true;
@@ -167,24 +183,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "co.com.cardealer.entity.Clientes[ clientesPK=" + clientesPK + " ]";
-    }
-
-    @XmlTransient
-    public List<Venta> getVentaList() {
-        return ventaList;
-    }
-
-    public void setVentaList(List<Venta> ventaList) {
-        this.ventaList = ventaList;
-    }
-
-    public TipoIdentificacion getTipoIdentificacion1() {
-        return tipoIdentificacion1;
-    }
-
-    public void setTipoIdentificacion1(TipoIdentificacion tipoIdentificacion1) {
-        this.tipoIdentificacion1 = tipoIdentificacion1;
+        return "co.com.cardealer.entity.Cliente[ clientePK=" + clientePK + " ]";
     }
     
 }

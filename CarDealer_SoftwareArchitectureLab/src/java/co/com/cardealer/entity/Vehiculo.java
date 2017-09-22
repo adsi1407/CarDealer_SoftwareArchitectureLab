@@ -40,11 +40,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Vehiculo.findByTipoServicio", query = "SELECT v FROM Vehiculo v WHERE v.tipoServicio = :tipoServicio")
     , @NamedQuery(name = "Vehiculo.findByClaseVehiculo", query = "SELECT v FROM Vehiculo v WHERE v.claseVehiculo = :claseVehiculo")
     , @NamedQuery(name = "Vehiculo.findByTipoCarroceria", query = "SELECT v FROM Vehiculo v WHERE v.tipoCarroceria = :tipoCarroceria")
-    , @NamedQuery(name = "Vehiculo.findByTipoCombustible", query = "SELECT v FROM Vehiculo v WHERE v.tipoCombustible = :tipoCombustible")})
+    , @NamedQuery(name = "Vehiculo.findByTipoCombustible", query = "SELECT v FROM Vehiculo v WHERE v.tipoCombustible = :tipoCombustible")
+    , @NamedQuery(name = "Vehiculo.findByPrecio", query = "SELECT v FROM Vehiculo v WHERE v.precio = :precio")})
 public class Vehiculo implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vehiculo")
-    private List<Venta> ventaList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -101,6 +99,12 @@ public class Vehiculo implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "tipoCombustible")
     private String tipoCombustible;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "precio")
+    private long precio;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vehiculo")
+    private List<Venta> ventaList;
 
     public Vehiculo() {
     }
@@ -109,7 +113,7 @@ public class Vehiculo implements Serializable {
         this.matricula = matricula;
     }
 
-    public Vehiculo(String matricula, String placa, String marca, String linea, int modelo, double cilindraje, String color, String tipoServicio, String claseVehiculo, String tipoCarroceria, String tipoCombustible) {
+    public Vehiculo(String matricula, String placa, String marca, String linea, int modelo, double cilindraje, String color, String tipoServicio, String claseVehiculo, String tipoCarroceria, String tipoCombustible, long precio) {
         this.matricula = matricula;
         this.placa = placa;
         this.marca = marca;
@@ -121,6 +125,7 @@ public class Vehiculo implements Serializable {
         this.claseVehiculo = claseVehiculo;
         this.tipoCarroceria = tipoCarroceria;
         this.tipoCombustible = tipoCombustible;
+        this.precio = precio;
     }
 
     public String getMatricula() {
@@ -211,6 +216,23 @@ public class Vehiculo implements Serializable {
         this.tipoCombustible = tipoCombustible;
     }
 
+    public long getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(long precio) {
+        this.precio = precio;
+    }
+
+    @XmlTransient
+    public List<Venta> getVentaList() {
+        return ventaList;
+    }
+
+    public void setVentaList(List<Venta> ventaList) {
+        this.ventaList = ventaList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -234,15 +256,6 @@ public class Vehiculo implements Serializable {
     @Override
     public String toString() {
         return "co.com.cardealer.entity.Vehiculo[ matricula=" + matricula + " ]";
-    }
-
-    @XmlTransient
-    public List<Venta> getVentaList() {
-        return ventaList;
-    }
-
-    public void setVentaList(List<Venta> ventaList) {
-        this.ventaList = ventaList;
     }
     
 }

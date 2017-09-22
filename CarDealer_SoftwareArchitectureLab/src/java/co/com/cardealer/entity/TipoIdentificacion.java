@@ -29,13 +29,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "tipoidentificacion")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TipoIdentificacion.findAll", query = "SELECT t FROM TipoIdentificacion t")
-    , @NamedQuery(name = "TipoIdentificacion.findByCodigo", query = "SELECT t FROM TipoIdentificacion t WHERE t.codigo = :codigo")
-    , @NamedQuery(name = "TipoIdentificacion.findByDescripcion", query = "SELECT t FROM TipoIdentificacion t WHERE t.descripcion = :descripcion")})
-public class TipoIdentificacion implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoIdentificacion1")
-    private List<Cliente> clienteList;
+    @NamedQuery(name = "Tipoidentificacion.findAll", query = "SELECT t FROM Tipoidentificacion t")
+    , @NamedQuery(name = "Tipoidentificacion.findByCodigo", query = "SELECT t FROM Tipoidentificacion t WHERE t.codigo = :codigo")
+    , @NamedQuery(name = "Tipoidentificacion.findByDescripcion", query = "SELECT t FROM Tipoidentificacion t WHERE t.descripcion = :descripcion")})
+public class Tipoidentificacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,15 +45,17 @@ public class TipoIdentificacion implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "descripcion")
     private String descripcion;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoidentificacion")
+    private List<Cliente> clienteList;
 
-    public TipoIdentificacion() {
+    public Tipoidentificacion() {
     }
 
-    public TipoIdentificacion(Integer codigo) {
+    public Tipoidentificacion(Integer codigo) {
         this.codigo = codigo;
     }
 
-    public TipoIdentificacion(Integer codigo, String descripcion) {
+    public Tipoidentificacion(Integer codigo, String descripcion) {
         this.codigo = codigo;
         this.descripcion = descripcion;
     }
@@ -77,6 +76,15 @@ public class TipoIdentificacion implements Serializable {
         this.descripcion = descripcion;
     }
 
+    @XmlTransient
+    public List<Cliente> getClienteList() {
+        return clienteList;
+    }
+
+    public void setClienteList(List<Cliente> clienteList) {
+        this.clienteList = clienteList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -87,10 +95,10 @@ public class TipoIdentificacion implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TipoIdentificacion)) {
+        if (!(object instanceof Tipoidentificacion)) {
             return false;
         }
-        TipoIdentificacion other = (TipoIdentificacion) object;
+        Tipoidentificacion other = (Tipoidentificacion) object;
         if ((this.codigo == null && other.codigo != null) || (this.codigo != null && !this.codigo.equals(other.codigo))) {
             return false;
         }
@@ -99,16 +107,7 @@ public class TipoIdentificacion implements Serializable {
 
     @Override
     public String toString() {
-        return "co.com.cardealer.entity.TipoIdentificacion[ codigo=" + codigo + " ]";
-    }
-
-    @XmlTransient
-    public List<Cliente> getClienteList() {
-        return clienteList;
-    }
-
-    public void setClienteList(List<Cliente> clienteList) {
-        this.clienteList = clienteList;
+        return "co.com.cardealer.entity.Tipoidentificacion[ codigo=" + codigo + " ]";
     }
     
 }
