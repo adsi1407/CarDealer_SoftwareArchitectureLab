@@ -14,7 +14,7 @@ import javax.ejb.Local;
  * @author DAVID
  */
 @Local
-public interface TipoidentificacionFacadeLocal {
+public interface TipoIdentificacionFacadeLocal {
 
     void create(Tipoidentificacion tipoidentificacion);
 

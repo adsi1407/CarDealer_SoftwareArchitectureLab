@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author DAVID
  */
 @Stateless
-public class TipoidentificacionFacade extends AbstractFacade<Tipoidentificacion> implements TipoidentificacionFacadeLocal {
+public class TipoIdentificacionFacade extends AbstractFacade<Tipoidentificacion> implements TipoIdentificacionFacadeLocal {
 
     @PersistenceContext(unitName = "CarDealer_SoftwareArchitectureLabPU")
     private EntityManager em;
@@ -25,7 +25,7 @@ public class TipoidentificacionFacade extends AbstractFacade<Tipoidentificacion>
         return em;
     }
 
-    public TipoidentificacionFacade() {
+    public TipoIdentificacionFacade() {
         super(Tipoidentificacion.class);
     }
     

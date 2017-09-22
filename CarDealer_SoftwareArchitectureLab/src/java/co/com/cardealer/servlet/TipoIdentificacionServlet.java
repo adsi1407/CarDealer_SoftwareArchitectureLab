@@ -6,7 +6,7 @@
 package co.com.cardealer.servlet;
 
 import co.com.cardealer.ejb.TipoIdentificacionFacadeLocal;
-import co.com.cardealer.entity.TipoIdentificacion;
+import co.com.cardealer.entity.Tipoidentificacion;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -46,13 +46,13 @@ public class TipoIdentificacionServlet extends HttpServlet {
             if (null != action) switch (action) {
                 case "list":
                     
-                    List<TipoIdentificacion> tiposIdentificacion = tipoIdentificacionFacade.findAll();
+                    List<Tipoidentificacion> tiposIdentificacion = tipoIdentificacionFacade.findAll();
                     request.getSession().setAttribute("tiposIdentificacion", tiposIdentificacion);
                     url = "listaTiposIdentificacion.jsp";
                     break;
                 case "search":{
                     
-                    TipoIdentificacion tipoIdentificacion = tipoIdentificacionFacade.find(request.getParameter("codigo"));
+                    Tipoidentificacion tipoIdentificacion = tipoIdentificacionFacade.find(request.getParameter("codigo"));
                     request.getSession().setAttribute("tipoIdentificacion", tipoIdentificacion);
                     url = "tipoIdentificacion.jsp";
                     break;
