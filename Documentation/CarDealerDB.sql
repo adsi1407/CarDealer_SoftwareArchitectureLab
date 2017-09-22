@@ -25,7 +25,8 @@ color VARCHAR(50) NOT NULL,
 tipoServicio VARCHAR(50) NOT NULL,
 claseVehiculo VARCHAR(50) NOT NULL,
 tipoCarroceria VARCHAR(100) NOT NULL,
-tipoCombustible VARCHAR(50) NOT NULL
+tipoCombustible VARCHAR(50) NOT NULL,
+precio DECIMAL NOT NULL
 );
 
 CREATE TABLE Fotos(
